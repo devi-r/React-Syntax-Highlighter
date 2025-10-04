@@ -1,0 +1,256 @@
+:root {
+  --editor-bg: #1e1e1e;
+  --editor-font-color: #d4d4d4;
+  --editor-font-family: "Fira Code", "Courier New", monospace;
+  --line-number-color: #858585;
+  --line-number-bg: #1e1e1e;
+  --token-keyword: #c586c0;
+  --token-identifier: #9cdcfe;
+  --token-string: #ce9178;
+  --token-number: #b5cea8;
+  --token-boolean: #569cd6;
+  --token-comment: #858585;
+  --token-operator: #d4d4d4;
+  --token-punctuation: #d4d4d4;
+  --token-null: #569cd6;
+  --ast-bg: #252526;
+  --ast-border: #333333;
+  /* New Semantic Colors */
+  --token-semantic-function-declaration: #dcdcaa;
+  --token-semantic-variable-declaration: #9cdcfe;
+  --token-semantic-property: #d4d4d4;
+  --token-semantic-builtin: #4ec9b0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.app-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: #121212;
+  color: var(--editor-font-color);
+  padding: 20px;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+
+.editor-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  height: 80vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--editor-bg);
+  justify-items: stretch;
+}
+
+.editor-main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.editor-content-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.editor-status-bar {
+  /* This makes the status bar span both columns of the parent .editor-container grid */
+  grid-column: 1 / -1;
+
+  background-color: #333333;
+  color: #cccccc;
+  padding: 4px 15px;
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  text-align: right;
+  border-top: 1px solid #444444;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.editor-status-bar.limit-reached {
+  background-color: #882020; /* A warning red */
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.line-numbers {
+  background-color: var(--line-number-bg);
+  color: var(--line-number-color);
+  padding: 15px 10px;
+  font-family: var(--editor-font-family);
+  font-size: 16px;
+  line-height: 24px;
+  text-align: right;
+  user-select: none;
+  overflow: hidden;
+}
+
+.line-numbers span {
+  display: block;
+}
+
+.code-input,
+.code-renderer {
+  margin: 0;
+  padding: 15px;
+  border: 0;
+  font-family: var(--editor-font-family);
+  font-size: 16px;
+  line-height: 24px;
+  white-space: pre;
+  overflow-wrap: normal;
+  text-align: left;
+  box-sizing: border-box;
+  letter-spacing: normal;
+  word-spacing: normal;
+  tab-size: 4;
+  -moz-tab-size: 4;
+  font-variant-ligatures: none;
+  /* Add aggressive resets to prevent browser interference. */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.code-renderer code {
+  display: block;
+  padding: 0;
+  margin: 0;
+  line-height: inherit;
+}
+
+.code-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: transparent;
+  color: transparent;
+  caret-color: white;
+  resize: none;
+  outline: none;
+  overflow: auto;
+}
+
+/* Apply positioning and scroll styles directly to the renderer <pre> tag */
+.code-renderer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  overflow: auto;
+  z-index: 0;
+}
+
+.ast-viewer {
+  background-color: var(--ast-bg);
+  border: 1px solid var(--ast-border);
+  border-radius: 8px;
+  padding: 15px;
+  font-family: var(--editor-font-family);
+  font-size: 14px;
+  overflow: auto;
+  color: #ccc;
+}
+
+.ast-viewer h3 {
+  margin-top: 0;
+  color: #eee;
+  border-bottom: 1px solid var(--ast-border);
+  padding-bottom: 10px;
+}
+
+.ast-viewer pre {
+  text-align: left;
+}
+
+.token-keyword {
+  color: var(--token-keyword);
+}
+
+.token-identifier {
+  color: var(--token-identifier);
+}
+
+.token-string {
+  color: var(--token-string);
+}
+
+.token-number {
+  color: var(--token-number);
+}
+
+.token-boolean {
+  color: var(--token-boolean);
+}
+
+.token-comment {
+  color: var(--token-comment);
+  font-style: italic;
+}
+
+.token-operator {
+  color: var(--token-operator);
+}
+
+.token-punctuation {
+  color: var(--token-punctuation);
+}
+
+.token-null {
+  color: var(--token-null);
+}
+
+.token-unknown {
+  color: #f44747;
+  background-color: #4d1818;
+}
+
+.token-semantic-function-declaration {
+  color: var(--token-semantic-function-declaration);
+}
+
+.token-semantic-variable-declaration {
+  color: var(--token-semantic-variable-declaration);
+}
+
+.token-semantic-property {
+  color: var(--token-semantic-property);
+}
+
+.token-semantic-builtin-global {
+  color: var(--token-semantic-builtin);
+}
+
+.token-semantic-builtin-method {
+  color: var(--token-semantic-builtin);
+}
