@@ -1,0 +1,7 @@
+/* This class simulates the container provided by the host */
+.layout-root {
+  container-type: inline-size;
+  container-name: layout-root;
+  width: 100%;
+  height: 100%;
+}

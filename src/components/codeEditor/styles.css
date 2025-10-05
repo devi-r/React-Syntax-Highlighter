@@ -58,6 +58,10 @@ h1 {
   overflow: hidden;
   background-color: var(--editor-bg);
   justify-items: stretch;
+
+  @container layout-root (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .editor-main {
@@ -180,6 +184,10 @@ h1 {
   font-size: 14px;
   overflow: auto;
   color: #ccc;
+
+  @container layout-root (max-width: 768px) {
+    display: none;
+  }
 }
 
 .ast-viewer h3 {
